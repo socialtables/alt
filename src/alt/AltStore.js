@@ -9,7 +9,6 @@ const {
   LIFECYCLE,
   LISTENERS,
   PUBLIC_METHODS,
-  STATE_CHANGED,
   STATE_CONTAINER
 } = Sym
 
@@ -23,7 +22,6 @@ export default class AltStore {
     this[ALT] = alt
     this[EE] = new EventEmitter()
     this[LIFECYCLE] = {}
-    this[STATE_CHANGED] = false
     this[STATE_CONTAINER] = state || model
 
     this.boundListeners = model[ALL_LISTENERS]
@@ -61,11 +59,9 @@ export default class AltStore {
           }
         }
 
-        if (result !== false || this[STATE_CHANGED]) {
+        if (result !== false) {
           this.emitChange()
         }
-
-        this[STATE_CHANGED] = false
       }
 
       if (model[LIFECYCLE].afterEach) {
