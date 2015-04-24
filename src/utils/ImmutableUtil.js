@@ -1,10 +1,6 @@
 import Immutable from 'immutable'
 
-function makeImmutableObject(store, iden) {
-  if (iden) {
-    store.displayName = iden
-  }
-
+function makeImmutableObject(store) {
   store.lifecycle = store.lifecycle || {}
 
   store.lifecycle.serialize = function () {
@@ -18,7 +14,7 @@ function makeImmutableObject(store, iden) {
   return store
 }
 
-function makeImmutableClass(Store, iden) {
+function makeImmutableClass(Store) {
   class ImmutableClass extends Store {
     constructor(...args) {
       super(...args)
@@ -33,15 +29,15 @@ function makeImmutableClass(Store, iden) {
     }
   }
 
-  ImmutableClass.displayName = iden || Store.displayName || ''
+  ImmutableClass.displayName = Store.displayName || Store.name || ''
 
   return ImmutableClass
 }
 
 function immutable(store) {
   const StoreModel = typeof store === 'function'
-    ? makeImmutableClass(store, iden)
-    : makeImmutableObject(store, iden)
+    ? makeImmutableClass(store)
+    : makeImmutableObject(store)
 
   StoreModel.config = {
     stateKey: 'state',

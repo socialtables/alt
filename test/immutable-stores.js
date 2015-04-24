@@ -32,7 +32,7 @@ export default {
         }
       }
 
-      const store = alt.createImmutableStore(ImmutableStore, 'ImmutableStore')
+      const store = alt.createStore(ImmutableStore, 'ImmutableStore')
 
       assert.isUndefined(store.getState().toJS().foo, 'foo has not been defined')
 
